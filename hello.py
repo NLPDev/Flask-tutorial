@@ -1,36 +1,23 @@
-from flask import Flask, session, redirect, url_for, escape, request
+from flask import Flask, redirect, url_for, render_template, request, abort
 app = Flask(__name__)
-app.secret_key = 'any random string'
 
 @app.route('/')
 def index():
-   if 'username' in session:
-      username = session['username']
-      return 'Logged in as ' + username + '<br>' + \
-         "<b><a href = '/logout'>click here to log out</a></b>"
-   return "You are not logged in <br><a href = '/login'></b>" + \
-      "click here to log in</b></a>"
+   return render_template('index.html')
 
-
-@app.route('/login', methods = ['GET', 'POST'])
+@app.route('/login',methods = ['POST', 'GET'])
 def login():
    if request.method == 'POST':
-      session['username'] = request.form['username']
+      if request.form['username'] == 'admin' :
+         return redirect(url_for('success'))
+      else:
+         abort(401)
+   else:
       return redirect(url_for('index'))
-   return '''
-	
-   <form action = "" method = "post">
-      <p><input type = 'text' name = 'username'/></p>
-      <p><input type = 'submit' value = 'Login'/></p>
-   </form>
-	
-   '''
 
-@app.route('/logout')
-def logout():
-   # remove the username from the session if it is there
-   session.pop('username', None)
-   return redirect(url_for('index'))
+@app.route('/success')
+def success():
+   return 'logged in successfully'
 
 if __name__ == '__main__':
    app.run(debug = True)
