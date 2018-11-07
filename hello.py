@@ -1,49 +1,48 @@
-from flask import Flask, render_template, request
+from flask import Flask, request, flash, url_for, redirect, render_template
+from flask_sqlalchemy import SQLAlchemy
+
 import sqlite3 as sql
 app = Flask(__name__)
 
+app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///students.sqlite3'
+app.config['SECRET_KEY'] = "random string"
+
+db = SQLAlchemy(app)
+
+class students(db.Model):
+   id = db.Column('student_id', db.Integer, primary_key = True)
+   name = db.Column(db.String(100))
+   city = db.Column(db.String(50))  
+   addr = db.Column(db.String(200))
+   pin = db.Column(db.String(10))
+
+   def __init__(self, name, city, addr,pin):
+      self.name = name
+      self.city = city
+      self.addr = addr
+      self.pin = pin
+
+
 @app.route('/')
-def home():
-   return render_template('home.html')
+def show_all():
+   return render_template('show_all.html', students = students.query.all() )
 
-@app.route('/enternew')
-def new_student():
-   return render_template('student.html')
-
-@app.route('/addrec',methods = ['POST', 'GET'])
-def addrec():
+@app.route('/new', methods = ['GET', 'POST'])
+def new():
    if request.method == 'POST':
-      try:
-         nm = request.form['nm']
-         addr = request.form['add']
-         city = request.form['city']
-         pin = request.form['pin']
+      if not request.form['name'] or not request.form['city'] or not request.form['addr']:
+         flash('Please enter all the fields', 'error')
+      else:
+         student = students(request.form['name'], request.form['city'], request.form['addr'], request.form['pin'])
          
-         with sql.connect("database.db") as con:
-            cur = con.cursor()
-            
-            cur.execute("INSERT INTO students (name,addr,city,pin) VALUES (?,?,?,?)",(nm,addr,city,pin) )
-            
-            con.commit()
-            msg = "Record successfully added"
-      except:
-         con.rollback()
-         msg = "error in insert operation"
-      
-      finally:
-         return render_template("result.html",msg = msg)
-         con.close()
+         db.session.add(student)
+         db.session.commit()
+         
+         flash('Record was successfully added')
+         return redirect(url_for('show_all'))
+   return render_template('new.html')
 
-@app.route('/list')
-def list():
-   con = sql.connect("database.db")
-   con.row_factory = sql.Row
-   
-   cur = con.cursor()
-   cur.execute("select * from students")
-   
-   rows = cur.fetchall();
-   return render_template("list.html",rows = rows)
 
 if __name__ == '__main__':
+   db.create_all()
    app.run(debug = True)
