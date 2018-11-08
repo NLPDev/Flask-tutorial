@@ -1,0 +1,14 @@
+<html>
+<head>
+<script type="text/javascript"
+    src="{ URI to jQuery - not included with this project }"></script>
+<script type="text/javascript"
+    src="/static/js/sijax/sijax.js"></script>
+<script type="text/javascript">
+    {{ g.sijax.get_js()|safe }}
+</script>
+</head>
+<body>
+    <a href="javascript://" onclick="Sijax.request('say_hi');">Click here</a>
+</body>
+</html>
