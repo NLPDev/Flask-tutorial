@@ -1,0 +1,5 @@
+from flup.server.fcgi import WSGIServer
+from yourapplication import hello
+
+if __name__ == '__main__':
+   WSGIServer(hello).run()
