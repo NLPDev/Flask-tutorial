@@ -34,5 +34,19 @@ def index():
 	if "username" in session:
 		username=seesion['username']
 		return "Lodgged in as "+username
-	return "You are not lgged in <a></a<"                                                                                                ']                                                 )
+	return "You are not lgged in <br><a href='/login'>"+\
+	"click here to log in </a>"   
+
+@app.route('/login', method=['GET', 'POST'])
+def login():
+	if request.method=='POST':
+		session['username']=request.form['username']
+		return redirect(url_for('index'))
+
+	return '''
+	<form action="" method="post">
+		<p><input type=text name=username/></p>
+		<p><input type=submit value=Login/></p>
+	</form>             
+	'''                                                                                ']                                                 )
 
