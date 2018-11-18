@@ -30,23 +30,9 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 @app.route('/')
-def student():
-   return render_template('student.html')
-
-@app.route('/getcookie')
-def getcooki():
-	nam=request
-	name=request.cookis.get('userI')
-	return resp
-
-@app.route('/setcookie', method=['POST', 'GET'])
-def setcookie():
-	if request.method=='POST':
-		user=request.form['nm']
-
-	res=make_response(render_template('readcooki.html'))
-	res.set_cookie('userID', user)
-
-	return res
-                                                                                                ']                                                 )
+def index():
+	if "username" in session:
+		username=seesion['username']
+		return "Lodgged in as "+username
+	return "You are not lgged in <a></a<"                                                                                                ']                                                 )
 
