@@ -33,11 +33,18 @@ app = Flask(__name__)
 def student():
    return render_template('student.html')
 
-@app.route('/result',methods = ['POST', 'GET'])
-def result():
-   if request.method == 'POST':
-      result = request.form
-      return render_template("result.html",result = result)
+@app.route('/getcookie')
+def getcooki():
+	nam=request
+	name=request.cookis.get('userI')
+	return resp
 
-if __name__ == '__main__':
-   app.run(debug = True)
+@app.route('/setcookie', method=['POST', 'GET']
+def setcookie():
+	if request.method=='POST':
+		user=request.form['nm']
+
+		res=make_response(render_template('readcooki.html'))
+		res.set_cookie('userID', user)
+                                                                                                ']                                                 )
+
