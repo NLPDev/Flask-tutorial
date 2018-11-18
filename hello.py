@@ -39,12 +39,14 @@ def getcooki():
 	name=request.cookis.get('userI')
 	return resp
 
-@app.route('/setcookie', method=['POST', 'GET']
+@app.route('/setcookie', method=['POST', 'GET'])
 def setcookie():
 	if request.method=='POST':
 		user=request.form['nm']
 
-		res=make_response(render_template('readcooki.html'))
-		res.set_cookie('userID', user)
+	res=make_response(render_template('readcooki.html'))
+	res.set_cookie('userID', user)
+
+	return res
                                                                                                 ']                                                 )
 
