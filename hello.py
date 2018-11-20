@@ -26,27 +26,24 @@
 # if __name__ == '__main__':
 #    app.run(debug = True)
 
-from flask import Flask, render_template, request
+from flask import Flask, redirect, url_for, render_template, request
+# Initialize the Flask application
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-	if "username" in session:
-		username=seesion['username']
-		return "Lodgged in as "+username
-	return "You are not lgged in <br><a href='/login'>"+\
-	"click here to log in </a>"   
+   return render_template('log_in.html')
 
-@app.route('/login', method=['GET', 'POST'])
+@app.route('/login',methods = ['POST', 'GET'])
 def login():
-	if request.method=='POST':
-		session['username']=request.form['username']
-		return redirect(url_for('index'))
+   if request.method == 'POST' and
+   request.form['username'] == 'admin' :
+   return redirect(url_for('success'))
+   return redirect(url_for('index'))
 
-	return '''
-	<form action="" method="post">
-		<p><input type=text name=username/></p>
-		<p><input type=submit value=Login/></p>
-	</form>             
-	'''                                                                                ']                                                 )
-
+@app.route('/success')
+def success():
+   return 'logged in successfully'
+	
+if __name__ == '__main__':
+   app.run(debug = True)
