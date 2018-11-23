@@ -1,50 +1,28 @@
-from flask import Flask, render_template, request
-import sqlite3 as sql
+import os
+from flask import Flask, g, render_template
+# from flask_sijax import sijax
+import flask_sijax
+
+path = os.path.join('.', os.path.dirname(__file__), 'static/js/sijax/')
 app = Flask(__name__)
 
+app.config['SIJAX_STATIC_PATH'] = path
+app.config['SIJAX_JSON_URI'] = '/static/js/sijax/json2.js'
+flask_sijax.Sijax(app)
+
 @app.route('/')
-def home():
-   return render_template('home.html')
-
-@app.route('/enternew')
-def new_student():
-   return render_template('student.html')
-
-@app.route('/addrec',methods = ['POST', 'GET'])
-def addrec():
-   if request.method == 'POST':
-      try:
-         nm = request.form['nm']
-         addr = request.form['add']
-         city = request.form['city']
-         pin = request.form['pin']
-         
-         with sql.connect("database.db") as con:
-            cur = con.cursor()
-            
-            cur.execute("INSERT INTO students (name,addr,city,pin) \
-               VALUES (?,?,?,?)",(nm,addr,city,pin) )
-            
-            con.commit()
-            msg = "Record successfully added"
-      except:
-         con.rollback()
-         msg = "error in insert operation"
-      
-      finally:
-         return render_template("result.html",msg = msg)
-         con.close()
-
-@app.route('/list')
-def list():
-   con = sql.connect("database.db")
-   con.row_factory = sql.Row
+def index():
+   return 'Index'
    
-   cur = con.cursor()
-   cur.execute("select * from students")
-   
-   rows = cur.fetchall();
-   return render_template("list.html",rows = rows)
+@flask_sijax.route(app, '/hello')
+def hello():
+   def say_hi(obj_response):
+      obj_response.alert('Hi there!')
+   if g.sijax.is_sijax_request:
+      # Sijax request detected - let Sijax handle it
+      g.sijax.register_callback('say_hi', say_hi)
+      return g.sijax.process_request()
+   return render_template('sijaxexample.html')
 
 if __name__ == '__main__':
    app.run(debug = True)
