@@ -1,10 +1,19 @@
-from flask import Flask, render_template
-app = Flask(__name__)
+from flask_wtf import Form
+from wtforms import TextField, IntegerField, TextAreaField, SubmitField, RadioField,
+   SelectField
 
-@app.route('/result')
-def result():
-   dict = {'phy':50,'che':60,'maths':70}
-   return render_template('result.html', result = dict)
+from wtforms import validators, ValidationError
 
-if __name__ == '__main__':
-   app.run(debug = True)
+class ContactForm(Form):
+   name = TextField("Name Of Student",[validators.Required("Please enter \
+      your name.")])
+   Gender = RadioField('Gender', choices = [('M','Male'),('F','Female')])
+   Address = TextAreaField("Address")
+   
+   email = TextField("Email",[validators.Required("Please enter your email address."),
+      validators.Email("Please enter your email address.")])
+   
+   Age = IntegerField("age")
+   language = SelectField('Languages', choices = [('cpp', 'C++'), 
+      ('py', 'Python')])
+   submit = SubmitField("Send")
