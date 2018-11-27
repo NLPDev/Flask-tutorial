@@ -1,0 +1,36 @@
+Server URL         : http://localhost:8000/
+Server Root        : /var/tmp/mod_wsgi-localhost:8000:501
+Server Conf        : /var/tmp/mod_wsgi-localhost:8000:501/httpd.conf
+Error Log File     : /var/tmp/mod_wsgi-localhost:8000:501/error_log (warn)
+Request Capacity   : 5 (1 process * 5 threads)
+Request Timeout    : 60 (seconds)
+Startup Timeout    : 15 (seconds)
+Queue Backlog      : 100 (connections)
+Queue Timeout      : 45 (seconds)
+Server Capacity    : 20 (event/worker), 20 (prefork)
+Server Backlog     : 500 (connections)
+Locale Setting     : en_US.UTF-8
+Server URL         : http://localhost:8000/
+Server Root        : /var/tmp/mod_wsgi-localhost:8000:501
+Server Conf        : /var/tmp/mod_wsgi-localhost:8000:501/httpd.conf
+Error Log File     : /var/tmp/mod_wsgi-localhost:8000:501/error_log (warn)
+Request Capacity   : 5 (1 process * 5 threads)
+Request Timeout    : 60 (seconds)
+Startup Timeout    : 15 (seconds)
+Queue Backlog      : 100 (connections)
+Queue Timeout      : 45 (seconds)
+Server Capacity    : 20 (event/worker), 20 (prefork)
+Server Backlog     : 500 (connections)
+Locale Setting     : en_US.UTF-8
+Server URL         : http://localhost:8000/
+Server Root        : /var/tmp/mod_wsgi-localhost:8000:501
+Server Conf        : /var/tmp/mod_wsgi-localhost:8000:501/httpd.conf
+Error Log File     : /var/tmp/mod_wsgi-localhost:8000:501/error_log (warn)
+Request Capacity   : 5 (1 process * 5 threads)
+Request Timeout    : 60 (seconds)
+Startup Timeout    : 15 (seconds)
+Queue Backlog      : 100 (connections)
+Queue Timeout      : 45 (seconds)
+Server Capacity    : 20 (event/worker), 20 (prefork)
+Server Backlog     : 500 (connections)
+Locale Setting     : en_US.UTF-8
